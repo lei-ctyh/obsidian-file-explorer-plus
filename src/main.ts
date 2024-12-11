@@ -3,7 +3,7 @@ import { around } from "monkey-around";
 
 import FileExplorerPlusSettingTab, { FileExplorerPlusPluginSettings, UNSEEN_FILES_DEFAULT_SETTINGS } from "./settings";
 import { addCommandsToFileMenu, addOnRename, addOnDelete, addOnTagChange, addCommands } from "./handlers";
-import { checkPathFilter, checkTagFilter, changeVirtualElementPin } from "./utils";
+import { checkPathFilter, checkTagFilter, changeVirtualElementPin,checkPrefabFilter } from "./utils";
 
 export default class FileExplorerPlusPlugin extends Plugin {
     settings: FileExplorerPlusPluginSettings;
@@ -192,6 +192,11 @@ export default class FileExplorerPlusPlugin extends Plugin {
             if (tagFilterActivated) {
                 return true;
             }
+			const prefabFilterActivated = checkPrefabFilter(path);
+
+            if (prefabFilterActivated) {
+				return true;
+			}
 
             return false;
         }) as TAbstractFile[];

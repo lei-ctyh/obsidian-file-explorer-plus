@@ -19,10 +19,13 @@ export default class FileExplorerPlusPlugin extends Plugin {
 
         this.addSettingTab(new FileExplorerPlusSettingTab(this.app, this));
 
-        this.app.workspace.onLayoutReady(() => {
-            this.patchFileExplorer();
-            this.getFileExplorer()?.requestSort();
-        });
+		this.app.workspace.onLayoutReady(() => {
+			this.patchFileExplorer();
+			const fileExplorer = this.getFileExplorer();
+			if (fileExplorer && typeof fileExplorer.requestSort === 'function') {
+				fileExplorer.requestSort();
+			}
+		});
 
         this.app.workspace.on("layout-change", () => {
             if (!this.getFileExplorer()?.fileExplorerPlusPatched) {

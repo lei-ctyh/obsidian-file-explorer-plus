@@ -113,3 +113,24 @@ export function checkTagFilter(filter: TagFilter, file: TAbstractFile): boolean 
 
     return false;
 }
+
+/**
+ * 对预设场景进行过滤
+ * @param file
+ */
+export function checkPrefabFilter(file: TAbstractFile): boolean {
+	if (file instanceof TFile) {
+		return false;
+	}
+	if (file.parent) {
+		for (let i = 0; i < file.parent.children.length; i++) {
+			let child = file.parent.children[i];
+			if (child instanceof TFile && child.extension === "md" && child.basename == file.name) {
+				return true;
+			}
+		}
+	}
+
+
+	return false;
+}
